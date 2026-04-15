@@ -1,0 +1,58 @@
+version: 2
+
+models:
+  - name: agg_orders
+    columns:
+      - name: id_order
+        tests:
+          - unique
+          - not_null
+      - name: num_of_items
+        tests:
+          - not_null
+      - name: customer_name
+        tests:
+          - not_null
+      - name: total_for_order
+        tests:
+          - is_non_negative
+
+  - name: best_day_of_week
+    columns:
+      - name: purchased_day_of_week
+        tests:
+          - unique
+      - name: total_items
+        tests:
+          - is_non_negative
+      - name: total_sales
+        tests:
+          - is_non_negative
+
+  - name: not_in_stock
+    columns:
+      - name: id_order
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_order')
+              field: id_order
+      - name: id_manager
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_manager')
+              field: id_manager
+      - name: product_name
+        tests:
+          - not_null
+      - name: department
+        tests:
+          - not_null
+          - accepted_values:
+              values: [ 'Electronics', 'Furniture' ]
+      - name: status
+        tests:
+          - not_null
+          - accepted_values:
+              values: [ 'Pending', 'Shipped', 'Delivered', 'Cancelled', 'Returned', 'Error' ]

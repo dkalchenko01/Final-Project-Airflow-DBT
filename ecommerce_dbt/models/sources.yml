@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: external_source
+    schema: main
+    tables:
+      - name: raw_products
+      - name: raw_people
+      - name: raw_geo_directory
+      - name: raw_order_items
+      - name: raw_status_logs

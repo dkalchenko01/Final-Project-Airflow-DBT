@@ -1,0 +1,8 @@
+ecommerce_dbt:
+
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: 'final_project_ecommerce.duckdb'
+      threads: 24

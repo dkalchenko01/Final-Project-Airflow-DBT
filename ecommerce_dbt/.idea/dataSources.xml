@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="ecommerce_dbt.db" uuid="9fd167c2-01d4-4163-8a22-d2f6d3180d8b">
+      <driver-ref>duckdb</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.duckdb.DuckDBDriver</jdbc-driver>
+      <jdbc-url>jdbc:duckdb:$PROJECT_DIR$/ecommerce.duckdb</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+  </component>
+</project>

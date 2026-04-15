@@ -1,0 +1,207 @@
+version: 2
+
+models:
+  - name: dim_customer
+    columns:
+      - name: id_customer
+        tests:
+          - unique
+          - not_null
+      - name: name
+        tests:
+          - not_null
+      - name: phone_num
+        tests:
+          - not_null
+      - name: registration_date
+        tests:
+          - not_null
+
+  - name: dim_department
+    columns:
+      - name: id_department
+        tests:
+          - unique
+          - not_null
+      - name: name
+        tests:
+          - not_null
+          - accepted_values:
+              values: [ 'Electronics', 'Furniture' ]
+      - name: head_manager
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('dim_manager')
+              field: id_manager
+
+  - name: dim_manager
+    columns:
+      - name: id_manager
+        tests:
+          - unique
+          - not_null
+      - name: name
+        tests:
+          - not_null
+      - name: id_department
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_department')
+              field: id_department
+      - name: phone_num
+        tests:
+          - not_null
+      - name: id_head
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_manager')
+              field: id_manager
+      - name: start_date
+        tests:
+          - not_null
+
+  - name: dim_product
+    columns:
+      - name: id_product
+        tests:
+          - unique
+          - not_null
+      - name: id_warehouse
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_warehouse')
+              field: id_warehouse
+      - name: name
+        tests:
+          - not_null
+      - name: category
+        tests:
+          - not_null
+      - name: price
+        tests:
+          - not_null
+          - is_positive
+      - name: left_in_stock
+        tests:
+          - not_null
+      - name: updated_at
+        tests:
+          - not_null
+
+  - name: dim_status_log
+    columns:
+      - name: id_order_item
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              to: ref('stg_order_item')
+              field: id_order_item
+      - name: id_status
+        tests:
+          - unique
+          - not_null
+      - name: status
+        tests:
+          - not_null
+          - accepted_values:
+              values: [ 'Pending', 'Shipped', 'Delivered', 'Cancelled', 'Returned' ]
+      - name: status_timestamp
+        tests:
+          - not_null
+
+  - name: dim_warehouse
+    columns:
+      - name: id_warehouse
+        tests:
+          - unique
+          - not_null
+      - name: id_responsible
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_manager')
+              field: id_manager
+      - name: address
+        tests:
+          - not_null
+
+  - name: fct_order_item
+    columns:
+      - name: id_order_item
+        tests:
+          - unique
+          - not_null
+      - name: id_order
+        tests:
+          - not_null
+      - name: id_customer
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_customer')
+              field: id_customer
+      - name: id_manager
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_manager')
+              field: id_manager
+      - name: id_warehouse
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_warehouse')
+              field: id_warehouse
+      - name: customer_name
+        tests:
+          - not_null
+      - name: phone_num
+        tests:
+          - not_null
+      - name: manager_name
+        tests:
+          - not_null
+      - name: department
+        tests:
+          - not_null
+          - accepted_values:
+              values: [ 'Electronics', 'Furniture' ]
+      - name: quantity
+        tests:
+          - is_non_negative
+      - name: price
+        tests:
+          - not_null
+      - name: purchased_at
+        tests:
+          - not_null
+      - name: status
+        tests:
+          - not_null
+          - accepted_values:
+              values: [ 'Pending', 'Shipped', 'Delivered', 'Cancelled', 'Returned', 'Error' ]
+      - name: payment_method
+        tests:
+          - not_null
+          - accepted_values:
+              values: [ 'Credit Card', 'PayPal', 'Cash', 'Bank Transfer' ]
+      - name: shipping_method
+        tests:
+          - not_null
+          - accepted_values:
+              values: [ 'Express', 'Standard', 'Pickup' ]
+      - name: discount
+        tests:
+          - is_non_negative
+      - name: left_in_stock
+        tests:
+          - is_non_negative
+      - name: total
+        tests:
+          - is_non_negative
