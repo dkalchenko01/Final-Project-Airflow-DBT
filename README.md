@@ -65,9 +65,10 @@ We organized the transformation logic into three distinct layers:
 
 ## ⛓️‍💥 Lineage Graph
 
-\<p align="center"\>
-\<img src="images/lineage\_graph.png" width="750"/\>
-\</p\>
+<p align="center">
+  <img src="image/lineage_graph.jpg" width="900"/>
+</p>
+
 
 -----
 
